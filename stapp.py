@@ -127,9 +127,10 @@ if 'median_result_score' not in st.session_state:
 with st.sidebar:
     st.header("Dice Rolls")
     players = st.slider("Player count", 1, 5, 2)
-    if st.button("Clear All Scores and History"):
+    if st.button("Reset Data"):
         st.session_state.running_totals = {}
         st.session_state.additions_history = {}
+        st.session_state.median_result_score = 0
         for index in range(players):
             st.session_state[f"player{index}"] = 0
 
