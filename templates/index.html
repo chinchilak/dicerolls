@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Feed and Scores</title>
+    <style>
+        .large-input {
+            font-size: 18px;
+            height: 30px;
+        }
+
+        .large-button {
+            font-size: 18px;
+            height: 40px;
+        }
+
+        .large-text {
+            font-size: 18pt;
+        }
+        .large-text2 {
+            font-size: 16pt;
+        }
+    </style>
+</head>
+<body>
+    <div style="float:left; width:50%;">
+        <h2>Video Feed</h2>
+        <img src="{{ url_for('video_feed') }}" alt="Video Feed">
+    </div>
+
+    <div style="float:right; width:40%;">
+        <h2>Scores</h2>
+        <p class="large-text">Player 1 Score: <b>{{ player1_score }}</b></p>
+        <p class="large-text2">Player 1 History: <i>{{ player1_score_history }}</i></p>
+        <p class="large-text">Player 2 Score: <b>{{ player2_score }}</b></p>
+        <p class="large-text2">Player 1 History: <i>{{ player2_score_history }}</i></p>
+        <br><br>
+        <h2>Update Scores</h2>
+        <form action="{{ url_for('update_score') }}" method="post">
+            <input type="text" name="player" id="player" value="player1" hidden>
+            <input type="number" name="score" id="score" class="large-input" required>
+            <br><br>
+            <button type="submit" class="large-button">Update Score - Player 1</button>
+        </form>
+        <br><br><br>
+        <form action="{{ url_for('update_score') }}" method="post">
+            <input type="text" name="player" id="player" value="player2" hidden>
+            <input type="number" name="score" id="score" class="large-input" required>
+            <br><br>
+            <button type="submit" class="large-button">Update Score - Player 2</button>
+        </form>
+    </div>
+</body>
+</html>
