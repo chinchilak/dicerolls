@@ -44,12 +44,12 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            function increaseScore(inputId) {
+            function increaseScore(inputId, amount) {
                 var inputElement = document.getElementById(inputId);
 
                 if (inputElement) {
                     var currentScore = parseInt(inputElement.value) || 0;
-                    var newScore = currentScore + 50;
+                    var newScore = currentScore + amount;
                     inputElement.value = newScore;
                 } else {
                     console.error("Input element with ID '" + inputId + "' not found.");
@@ -57,11 +57,22 @@
             }
 
             document.getElementById('increaseButton1').onclick = function() {
-                increaseScore('score1');}
+                increaseScore('score1', 50);}
+
+            document.getElementById('increaseButton11').onclick = function() {
+                increaseScore('score1', 100);}
             
+            document.getElementById('increaseButton111').onclick = function() {
+                increaseScore('score1', 1000);}  
+
             document.getElementById('increaseButton2').onclick = function() {
-                increaseScore('score2');
-            };
+                increaseScore('score2', 50);}
+
+            document.getElementById('increaseButton22').onclick = function() {
+                increaseScore('score2', 100);}
+            
+            document.getElementById('increaseButton222').onclick = function() {
+                increaseScore('score2', 1000);}  
         });
     </script>
 </head>
@@ -74,7 +85,9 @@
                 <input type="number" id="score1" name="score" class="large-input" required>
                 <br><br>
                 <button type="button" class="large-button" id="increaseButton1">+ 50</button>
-                <button type="submit" class="large-button">+ Player 1</button>
+                <button type="button" class="large-button" id="increaseButton11">+ 100</button>
+                <button type="button" class="large-button" id="increaseButton111">+ 1000</button>
+                <button type="submit" class="large-button">>>> Player 1</button>
             </form>
 
             <br><br><br>
@@ -84,17 +97,23 @@
                 <input type="number" id="score2" name="score" class="large-input" required>
                 <br><br>
                 <button type="button" class="large-button" id="increaseButton2">+ 50</button>
-                <button type="submit" class="large-button">+ Player 2</button>
+                <button type="button" class="large-button" id="increaseButton22">+ 100</button>
+                <button type="button" class="large-button" id="increaseButton222">+ 1000</button>
+                <button type="submit" class="large-button">>>> Player 2</button>
             </form>
         </div>
 
         <div class="column2">
             <h2>Scores</h2>
-            <p class="large-text">Player 1 Score: <b>{{ player1_score }}</b></p>
-            <p class="large-text2">Player 1 History: <br><i>{{ player1_score_history }}</i></p>
-            <p class="large-text">Player 2 Score: <b>{{ player2_score }}</b></p>
-            <p class="large-text2">Player 1 History: <br><i>{{ player2_score_history }}</i></p>
+            <p class="large-text">Player 1 Score: <b>{{ player1_score }}</b> {{ player1_score_history }}</p>
+            <br>
+            <p class="large-text">Player 2 Score: <b>{{ player2_score }}</b> {{ player2_score_history }}</p>
+            <br><br>
+            <form action="{{ url_for('clear_all') }}" method="post">
+                <button type="submit" class="large-button">Clear All Scores and History</button>
+            </form>
         </div>
+
     </div>
 
     <div class="video-container">
@@ -102,10 +121,5 @@
         <img class="video-feed" src="{{ url_for('video_feed') }}" alt="Video Feed">
     </div>
 
-    <div>
-        <form action="{{ url_for('clear_all') }}" method="post">
-            <button type="submit" class="large-button">Clear All Scores and History</button>
-        </form>
-    </div>
 </body>
 </html>
