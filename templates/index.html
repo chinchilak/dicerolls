@@ -21,34 +21,90 @@
         .large-text2 {
             font-size: 16pt;
         }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .column1 {
+            width: 35%;
+        }
+        .column2 {
+            width: 65%;
+        }
+        .video-container {
+            width: 700px;
+            height: 700px;
+        }
+
+        .video-feed {
+            width: 100%;
+            height: 100%;
+        }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function increaseScore(inputId) {
+                var inputElement = document.getElementById(inputId);
+
+                if (inputElement) {
+                    var currentScore = parseInt(inputElement.value) || 0;
+                    var newScore = currentScore + 50;
+                    inputElement.value = newScore;
+                } else {
+                    console.error("Input element with ID '" + inputId + "' not found.");
+                }
+            }
+
+            document.getElementById('increaseButton1').onclick = function() {
+                increaseScore('score1');}
+            
+            document.getElementById('increaseButton2').onclick = function() {
+                increaseScore('score2');
+            };
+        });
+    </script>
 </head>
 <body>
-    <div style="float:left; width:50%;">
-        <h2>Video Feed</h2>
-        <img src="{{ url_for('video_feed') }}" alt="Video Feed">
+    <div class="container">
+        <div class="column1">
+            <h2>Update Scores</h2>
+            <form action="{{ url_for('update_score') }}" method="post">
+                <input type="text" name="player" value="player1" hidden>
+                <input type="number" id="score1" name="score" class="large-input" required>
+                <br><br>
+                <button type="button" class="large-button" id="increaseButton1">+ 50</button>
+                <button type="submit" class="large-button">+ Player 1</button>
+            </form>
+
+            <br><br><br>
+
+            <form action="{{ url_for('update_score') }}" method="post">
+                <input type="text" name="player" value="player2" hidden>
+                <input type="number" id="score2" name="score" class="large-input" required>
+                <br><br>
+                <button type="button" class="large-button" id="increaseButton2">+ 50</button>
+                <button type="submit" class="large-button">+ Player 2</button>
+            </form>
+        </div>
+
+        <div class="column2">
+            <h2>Scores</h2>
+            <p class="large-text">Player 1 Score: <b>{{ player1_score }}</b></p>
+            <p class="large-text2">Player 1 History: <br><i>{{ player1_score_history }}</i></p>
+            <p class="large-text">Player 2 Score: <b>{{ player2_score }}</b></p>
+            <p class="large-text2">Player 1 History: <br><i>{{ player2_score_history }}</i></p>
+        </div>
     </div>
 
-    <div style="float:right; width:40%;">
-        <h2>Scores</h2>
-        <p class="large-text">Player 1 Score: <b>{{ player1_score }}</b></p>
-        <p class="large-text2">Player 1 History: <i>{{ player1_score_history }}</i></p>
-        <p class="large-text">Player 2 Score: <b>{{ player2_score }}</b></p>
-        <p class="large-text2">Player 1 History: <i>{{ player2_score_history }}</i></p>
-        <br><br>
-        <h2>Update Scores</h2>
-        <form action="{{ url_for('update_score') }}" method="post">
-            <input type="text" name="player" id="player" value="player1" hidden>
-            <input type="number" name="score" id="score" class="large-input" required>
-            <br><br>
-            <button type="submit" class="large-button">Update Score - Player 1</button>
-        </form>
-        <br><br><br>
-        <form action="{{ url_for('update_score') }}" method="post">
-            <input type="text" name="player" id="player" value="player2" hidden>
-            <input type="number" name="score" id="score" class="large-input" required>
-            <br><br>
-            <button type="submit" class="large-button">Update Score - Player 2</button>
+    <div class="video-container">
+        <h2>Video Feed</h2>
+        <img class="video-feed" src="{{ url_for('video_feed') }}" alt="Video Feed">
+    </div>
+
+    <div>
+        <form action="{{ url_for('clear_all') }}" method="post">
+            <button type="submit" class="large-button">Clear All Scores and History</button>
         </form>
     </div>
 </body>

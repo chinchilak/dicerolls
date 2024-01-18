@@ -159,6 +159,18 @@ def update_score():
 
     return render_template('index.html', player1_score=player1_score, player2_score=player2_score, player1_score_history=player1_score_history, player2_score_history=player2_score_history)
 
+@app.route('/clear_all', methods=['POST'])
+def clear_all():
+    global player1_score, player2_score, player1_score_history, player2_score_history
+
+    if request.method == 'POST':
+        player1_score = 0
+        player2_score = 0
+        player1_score_history = []
+        player2_score_history = []
+
+    return render_template('index.html', player1_score=player1_score, player2_score=player2_score, player1_score_history=player1_score_history, player2_score_history=player2_score_history)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
