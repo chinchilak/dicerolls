@@ -1,0 +1,3 @@
+Flask
+opencv_python
+streamlit
