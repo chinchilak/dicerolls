@@ -1,6 +1,3 @@
-import cv2
-import math
-import time
 import streamlit as st
 
 def evaluate_dice_results(dice_string):
