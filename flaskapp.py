@@ -3,8 +3,11 @@ import cv2
 import math
 
 
+IP = "192.168.1.168"
+PORT = 8080
+
 app = Flask(__name__)
-cap = cv2.VideoCapture("http://192.168.1.168:8080/video")
+cap = cv2.VideoCapture(f"http://{IP}:{PORT}/video")
 
 player1_score = 0
 player2_score = 0
@@ -16,7 +19,7 @@ def evaluate_dice_results(dice_string):
     dice_values = {
         "1": [100,200,1000,2000,4000,8000,0],
         "2": [0,0,200,400,800,1200,0],
-        "3": [0,0,300,900,1800,3600,0],
+        "3": [0,0,300,600,1200,2400,0],
         "4": [0,0,400,800,1600,3200,0],
         "5": [50,100,500,1000,2000,4000,0],
         "6": [0,0,600,1200,2400,4800,0]}
