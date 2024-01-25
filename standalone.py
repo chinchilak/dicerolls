@@ -94,6 +94,9 @@ for index, player, column in zip(player_ids, range(1, players + 1), columns):
         c4.button("+1000", key=f"add1000{index}", on_click=add_amount, args=(str(index),1000), use_container_width=True)
 
         c1.subheader(f"Score: {st.session_state.running_totals[f'player{index}']} / {10_000 - int(st.session_state.running_totals[f'player{index}'])}")
-        c3.subheader(f"Zero: {st.session_state.additions_history.get(f'additions_history{index}', []).count(0)}  ({(st.session_state.additions_history.get(f'additions_history{index}', []).count(0))/len(st.session_state.additions_history.get(f'additions_history{index}')):.2%})")
+        try:
+            c3.subheader(f"Zero: {st.session_state.additions_history.get(f'additions_history{index}', []).count(0)}  ({(st.session_state.additions_history.get(f'additions_history{index}', []).count(0))/len(st.session_state.additions_history.get(f'additions_history{index}')):.2%})")
+        except:
+            pass
         st.line_chart({index: value for index, value in enumerate(st.session_state.additions_history[f'additions_history{index}'])}, use_container_width=True)
         st.code(f"{st.session_state.additions_history[f'additions_history{index}']}")
