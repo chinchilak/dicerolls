@@ -63,15 +63,15 @@ col1, col2, col3, col4 = st.columns([1,1,1,4])
 
 for i in [1,2,3,4,5,6,7,8,9,0,"DEL","CLEAR"]:
     if i in [1,4,7,0]:
-        col1.button(str(i), key=f"button_{i}", on_click=update_input, args=(str(i),), use_container_width=True)
+        col1.button(str(i), key=f"button_{i}", on_click=update_input, args=(str(i)), use_container_width=True)
     elif i in [2,5,8]:
-        col2.button(str(i), key=f"button_{i}", on_click=update_input, args=(str(i),), use_container_width=True)
+        col2.button(str(i), key=f"button_{i}", on_click=update_input, args=(str(i)), use_container_width=True)
     elif i == "DEL":
         col2.button(i, key="button_DEL", on_click=delete_last, use_container_width=True)
     elif i == "CLEAR":
         col3.button(i, key="button_CLEAR", on_click=clear_all, use_container_width=True)
     elif i in [3,6,9]:
-        col3.button(str(i), key=f"button_{i}", on_click=update_input, args=(str(i),), use_container_width=True)
+        col3.button(str(i), key=f"button_{i}", on_click=update_input, args=(str(i)), use_container_width=True)
 
 player_ids = [i for i in range(players)]
 running_total = [0] * players
@@ -93,10 +93,15 @@ for index, player, column in zip(player_ids, range(1, players + 1), columns):
         c3.button("+350", key=f"add350{index}", on_click=add_amount, args=(str(index),350), use_container_width=True)
         c4.button("+1000", key=f"add1000{index}", on_click=add_amount, args=(str(index),1000), use_container_width=True)
 
-        c1.subheader(f"Score: {st.session_state.running_totals[f'player{index}']} / {10_000 - int(st.session_state.running_totals[f'player{index}'])}")
+        c1.markdown(f"### Score: :green[{st.session_state.running_totals[f'player{index}']}] / :red[{10_000 - int(st.session_state.running_totals[f'player{index}'])}]")
         try:
-            c3.subheader(f"Zero: {st.session_state.additions_history.get(f'additions_history{index}', []).count(0)}  ({(st.session_state.additions_history.get(f'additions_history{index}', []).count(0))/len(st.session_state.additions_history.get(f'additions_history{index}')):.2%})")
+            c3.markdown(f"#### Zero: :orange[{st.session_state.additions_history.get(f'additions_history{index}', []).count(0)}]  (:gray[{(st.session_state.additions_history.get(f'additions_history{index}', []).count(0))/len(st.session_state.additions_history.get(f'additions_history{index}')):.2%}])")
+        except:
+            pass
+        try:
+            c4.markdown(f"#### Top: :orange[{max(st.session_state.additions_history.get(f'additions_history{index}', []), default=None)}]")
         except:
             pass
         st.line_chart({index: value for index, value in enumerate(st.session_state.additions_history[f'additions_history{index}'])}, use_container_width=True)
         st.code(f"{st.session_state.additions_history[f'additions_history{index}']}")
+        
